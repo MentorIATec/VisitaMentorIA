@@ -1,0 +1,51 @@
+{
+  "dificiles": {
+    "alta": [
+      "Veo {palabra} con intensidad alta. ¿Qué está pasando hoy que podría estar aportando a esta sensación?",
+      "Gracias por compartirlo. ¿Qué lo disparó o en qué momento lo notas más?",
+      "¿Qué situación concreta de hoy (clase, entrega, cambio, relación) te hizo sentir {palabra}?",
+      "Describe una situación reciente donde sentiste {palabra}.",
+      "¿Qué te ayudaría ahora mismo a aliviar un poco esta sensación?"
+    ],
+    "media": [
+      "Parece que hay {palabra}. ¿Qué lo detona o cómo se manifiesta?",
+      "¿En qué contextos notas más {palabra} (aula, casa, traslados)?",
+      "Describe un ejemplo breve de hoy relacionado con tu {palabra}.",
+      "¿En qué momento del día sientes más {palabra}?",
+      "Cuéntanos algo que creas que está influyendo en tu {palabra}."
+    ]
+  },
+  "neutras": {
+    "alta": [
+      "Se siente {palabra} con intensidad alta. ¿Qué condiciones lo facilitan?",
+      "¿Qué ocurrió hoy que conecta con {palabra}?",
+      "¿En qué momento o situación notas más {palabra}?",
+      "¿Qué hábitos o situaciones notas alrededor de {palabra}?",
+      "¿Qué características de tu día están relacionadas con tu sensación de {palabra}?"
+    ],
+    "media": [
+      "{palabra} con intensidad media. ¿Qué contexto lo acompaña (clases, proyectos, hábitos)?",
+      "¿Algún detalle de hoy que ayude a entender tu {palabra}?",
+      "¿En qué momento del día experimentas más {palabra}?",
+      "Describe brevemente qué lo está influenciando.",
+      "¿Qué situaciones o eventos sientes que están conectados con tu {palabra}?"
+    ]
+  },
+  "agradables": {
+    "alta": [
+      "¡Qué bien leer **{palabra}**! ¿Qué sucedió o qué hiciste que te ayudó a sentirte así?",
+      "¿Qué condiciones o situaciones facilitaron que sintieras {palabra}?",
+      "¿En qué momento del día sentiste más {palabra}?",
+      "¿Quién o qué aportó a sentir {palabra} hoy?",
+      "¿Qué características de tu día están conectadas con tu sensación de {palabra}?"
+    ],
+    "media": [
+      "{palabra} con intensidad media. ¿Qué elementos de tu día están relacionados con tu {palabra}?",
+      "¿Qué detalle de hoy contribuyó a tu {palabra}?",
+      "Describe una situación breve que conecte con tu sensación de {palabra}.",
+      "¿En qué momento o contexto experimentas más {palabra}?",
+      "Comparte algo concreto que te ayude a recordar cómo llegaste a sentir {palabra}."
+    ]
+  }
+}
+
