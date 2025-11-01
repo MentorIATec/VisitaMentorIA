@@ -34,3 +34,28 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+# MoodMeterTec
+
+## Ejecutar en puerto alterno
+
+Si el puerto 3000 está ocupado:
+
+```bash
+PORT=3001 npm run start
+```
+
+Para matar procesos que usen el 3000 (macOS):
+
+```bash
+lsof -i :3000
+kill -9 <PID>
+```
+
+## E2E con Playwright
+
+El runner usa `PORT` si está definido. Ejemplos:
+
+```bash
+PORT=3001 npx playwright test
+```

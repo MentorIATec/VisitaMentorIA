@@ -12,6 +12,12 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Extras para este repo
+    "node_modules/**",
+    ".playwright-browsers/**",
+    "public/**",
+    "db/migrations/**",
+    "db/seeds/**",
   ]),
 ]);
 
