@@ -1,0 +1,70 @@
+{
+    "scale": { "min": -5, "max": 5 },
+    "quadrants": [
+      {
+        "id": "Q1",
+        "name": "Alta energía con emociones agradables",
+        "range": { "valence": [0, 5], "energy": [0, 5] },
+        "labels": ["entusiasmo", "orgullo", "motivación", "alegría", "esperanza"],
+        "micro_tips": {
+          "conversation": [
+            "Piensa en un logro reciente que quieras compartir con tu mentora/or.",
+            "Reflexiona sobre cómo esta energía puede ayudarte en tus metas y coméntalo en la sesión."
+          ],
+          "selfcare": [
+            "Escribe brevemente en qué quieres usar tu energía esta semana.",
+            "Celebra un avance con una acción que te genere satisfacción."
+          ]
+        }
+      },
+      {
+        "id": "Q2",
+        "name": "Alta energía con emociones difíciles",
+        "range": { "valence": [-5, -1], "energy": [0, 5] },
+        "labels": ["ansiedad", "irritación", "tensión", "frustración", "preocupación"],
+        "micro_tips": {
+          "conversation": [
+            "Identifica qué situación te genera mayor tensión y compártela con tu mentora/or.",
+            "Piensa en una pregunta que quieras hacer sobre cómo manejar esta energía."
+          ],
+          "selfcare": [
+            "Haz 1 minuto de respiración 4-4 (inhala 4s, exhala 4s).",
+            "Divide tu reto en un micro-paso que puedas iniciar hoy."
+          ]
+        }
+      },
+      {
+        "id": "Q3",
+        "name": "Baja energía con emociones difíciles",
+        "range": { "valence": [-5, -1], "energy": [-5, -1] },
+        "labels": ["tristeza", "cansancio", "abrumo", "desánimo", "apatía"],
+        "micro_tips": {
+          "conversation": [
+            "Piensa en un momento reciente en que sentiste estas emociones y compártelo en la sesión.",
+            "Reflexiona sobre qué tipo de apoyo te gustaría recibir de tu mentora/or."
+          ],
+          "selfcare": [
+            "Toma una pausa amable contigo: estírate o toma agua.",
+            "Si la sensación persiste, considera agendar un espacio de apoyo adicional."
+          ]
+        }
+      },
+      {
+        "id": "Q4",
+        "name": "Baja energía con emociones agradables",
+        "range": { "valence": [0, 5], "energy": [-5, -1] },
+        "labels": ["calma", "serenidad", "gratitud", "satisfacción", "tranquilidad"],
+        "micro_tips": {
+          "conversation": [
+            "Comparte qué te ayuda a mantener esta calma y cómo influye en tu vida académica o personal.",
+            "Piensa en algo por lo que sientas gratitud y menciónalo en la sesión."
+          ],
+          "selfcare": [
+            "Escribe un logro reciente y tu siguiente paso sencillo.",
+            "Aprovecha un momento de calma para organizar tus prioridades de la semana."
+          ]
+        }
+      }
+    ]
+  }
+  

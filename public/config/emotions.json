@@ -1,0 +1,39 @@
+{
+  "valence": ["dificil", "neutral", "agradable"],
+  "intensity": ["baja", "media", "alta"],
+  "emotions": {
+    "agradable": {
+      "alta": ["entusiasmo","alegría","ilusión","euforia","gratitud","conexión","motivación","esperanza","orgullo","diversión","inspiración","satisfacción","confianza","curiosidad"],
+      "media": ["bienestar","calma","serenidad","contento","gratitud","interés","equilibrio","tranquilidad","alivio","armonía","fluidez"],
+      "baja": ["paz","sosiego","quietud","descanso","relajación","estabilidad","contemplación"]
+    },
+    "dificil": {
+      "alta": ["enojo","irritación","frustración","ansiedad","inquietud","sobrecarga","presión","agobio","desesperación","tensión","angustia"],
+      "media": ["preocupación","frustración","tensión","incertidumbre","abrumo","nervios","inseguridad","impaciencia","decepción","culpa","vergüenza"],
+      "baja": ["cansancio","desánimo","tristeza","melancolía","apatía","desmotivación","vacío","nostalgia","pesadez"]
+    },
+    "neutral": {
+      "alta": ["activación","impulso","alerta","dinamismo"],
+      "media": ["equilibrio","atención","estabilidad","enfoque"],
+      "baja": ["pausa","baja energía","silencio","contemplación"]
+    }
+  },
+  "emoji": {
+    "agradable": { 
+      "alta": ["✨","🤩","🎉","💫","🌟"], 
+      "media": ["😊","🙂","🌿","🕊️"], 
+      "baja": ["😌","🍃","🌙","💤"] 
+    },
+    "dificil": { 
+      "alta": ["😤","😡","⚡","🧨"], 
+      "media": ["😟","😬","🤔","🌧️"], 
+      "baja": ["😞","😔","🫥","💤"] 
+    },
+    "neutral": { 
+      "alta": ["⚡","🔆","🏃‍♀️"], 
+      "media": ["🧭","🎯","🧘"], 
+      "baja": ["🫧","🌫️","🛏️"] 
+    }
+  }
+}
+
