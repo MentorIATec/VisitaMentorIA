@@ -11,7 +11,9 @@ export default function Footer() {
           </div>
           <div className="flex gap-4 items-center">
             <Link
-              href="/privacidad"
+              href="https://tec.mx/es/avisos-de-privacidad"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-slate-600 hover:text-slate-900 underline transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-slate-400 rounded"
             >
               Aviso de Privacidad
