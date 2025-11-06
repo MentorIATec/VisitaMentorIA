@@ -16,7 +16,8 @@
     "validate:full": "npm run validate && npm run build",
     "db:migrate": "node scripts/run-migrations.cjs",
     "db:seed": "node scripts/run-seeds.cjs",
-    "db:seed:catalogs": "node scripts/run-seeds-catalogs.cjs"
+    "db:seed:catalogs": "node scripts/run-seeds-catalogs.cjs",
+    "db:seed:mentors": "node scripts/run-seed-mentors.cjs"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
