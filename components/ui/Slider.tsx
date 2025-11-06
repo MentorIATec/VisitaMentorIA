@@ -82,7 +82,7 @@ export default function Slider({
           aria-valuemin={min}
           aria-valuemax={max}
           aria-valuenow={value}
-          aria-valuetext={intensityDescriptor || `Intensidad ${value}, banda ${intensityBand || 'media'}`}
+          aria-valuetext={intensityDescriptor ? `${intensityDescriptor}, ${value} de ${max}` : `Intensidad ${value}, banda ${intensityBand || 'media'}, ${value} de ${max}`}
         />
         <span className="w-8 text-center text-lg font-medium text-gray-900">{value}</span>
       </div>

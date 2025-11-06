@@ -16,10 +16,11 @@ export async function getMentorIdByEmail(email: string): Promise<string | null> 
 export async function runWithUserContext<T>(
   email: string | null | undefined,
   role: UserRole,
-  fn: Parameters<typeof withRlsContext<T>>[1]
+  fn: Parameters<typeof withRlsContext<T>>[1],
+  user_id?: string | null
 ) {
   const hashSalt = process.env.HASH_SALT || '';
-  return withRlsContext({ email: email || undefined, role, hashSalt }, fn);
+  return withRlsContext({ email: email || undefined, role, hashSalt, user_id: user_id || undefined }, fn);
 }
 
 

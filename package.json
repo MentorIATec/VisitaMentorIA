@@ -7,8 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
+    "test:e2e:mocks": "E2E_MOCKS=1 playwright test",
+    "validate": "npm run lint && npm run typecheck && npm run test:unit",
+    "validate:full": "npm run validate && npm run build",
     "db:migrate": "node scripts/run-migrations.cjs",
-    "db:seed": "node scripts/run-seeds.cjs"
+    "db:seed": "node scripts/run-seeds.cjs",
+    "db:seed:catalogs": "node scripts/run-seeds-catalogs.cjs"
   },
   "dependencies": {
     "dotenv": "^17.2.3",

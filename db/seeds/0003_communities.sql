@@ -1,16 +1,15 @@
--- Seed de comunidades (ON CONFLICT DO NOTHING)
+-- Seed de comunidades desde DATOSME_CURSOR.csv
 INSERT INTO public.communities (code, name, color)
 VALUES
-  ('ekvilibro','ekvilibro','#6FD34A'),
-  ('energio','energio','#FD8204'),
-  ('forta','forta','#87004A'),
-  ('krei','krei','#79858B'),
-  ('kresko','kresko','#0DCCCC'),
-  ('pasio','pasio','#CC0202'),
-  ('reflekto','reflekto','#FFDE17'),
-  ('revo','revo','#C4829A'),
-  ('spirita','spirita','#5B0F8B'),
-  ('talenta','talenta','#EC008C')
-ON CONFLICT (code) DO NOTHING;
-
+  ('ekvilibro', 'Ekvilibro', '#6FD34A'),
+  ('energio', 'Energio', '#FD8204'),
+  ('forta', 'Forta', '#87004A'),
+  ('krei', 'Krei', '#79858B'),
+  ('kresko', 'Kresko', '#0DCCCC'),
+  ('pasio', 'Pasio', '#CC0202'),
+  ('reflekto', 'Reflekto', '#FFDE17'),
+  ('revo', 'Revo', '#C4829A'),
+  ('spirita', 'Spirita', '#5B0F8B'),
+  ('talenta', 'Talenta', '#EC008C')
+ON CONFLICT (code) DO UPDATE SET name = EXCLUDED.name, color = EXCLUDED.color, active = true;
 

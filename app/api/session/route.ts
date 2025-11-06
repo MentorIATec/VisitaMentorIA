@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { runWithUserContext } from '@/lib/roles';
+import { auth } from '@/lib/auth';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -69,6 +70,24 @@ export async function POST(req: NextRequest) {
   // Role/email come from auth cookie (middleware enforces mentor/admin for dashboards; registro es público)
   const email = null; // registro es anónimo
   const role = 'anonymous' as const;
+  
+  // Verificar si hay sesión SSO
+  const session = await auth();
+  const extendedSession = session as unknown as { userId?: string | null; email?: string | null } | null;
+  const userId = extendedSession?.userId || null;
+  const sessionEmail = extendedSession?.email || null;
+
+  // Calcular email_hash si hay email de sesión SSO
+  let emailHash: string | null = null;
+  if (sessionEmail) {
+    const emailHashRes = await runWithUserContext(email, role, async (client) => {
+      return await client.query<{ hash: string }>(
+        'SELECT encode(digest($1 || current_setting(\'app.hash_salt\', true), \'sha256\'), \'hex\') AS hash',
+        [sessionEmail.toLowerCase()]
+      );
+    });
+    emailHash = emailHashRes.rows[0]?.hash || null;
+  }
 
   const result = await runWithUserContext(email, role, async (client) => {
     // Compute salted hash via DB function using configured app.hash_salt
@@ -98,8 +117,8 @@ export async function POST(req: NextRequest) {
 
     const sessionRes = await client.query<{ id: string }>(
       `INSERT INTO public.sessions (
-        hash_matricula, mentor_id, community_id, duration_min, reason_id, reason_free, channel, campus, consent_followup, followup_token, followup_variant, email
-      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
+        hash_matricula, mentor_id, community_id, duration_min, reason_id, reason_free, channel, campus, consent_followup, followup_token, followup_variant, email, user_id, email_hash
+      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
       RETURNING id`,
       [
         hash,
@@ -113,7 +132,9 @@ export async function POST(req: NextRequest) {
         data.consentFollowup,
         followupToken,
         followupVariant,
-        data.email || null
+        data.email || null,
+        userId,
+        emailHash
       ]
     );
     const sessionId = sessionRes.rows[0].id;
@@ -156,7 +177,7 @@ export async function POST(req: NextRequest) {
     );
 
     return { sessionId, followupToken };
-  });
+  }, userId);
 
   return NextResponse.json({ ok: true, sessionId: result.sessionId, followupToken: result.followupToken });
 }

@@ -1,12 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 
+type ExtendedSession = {
+  role?: 'admin' | 'mentor' | 'anonymous';
+  mentorId?: string | null;
+  userId?: string | null;
+  needsLink?: boolean;
+};
+
 export async function middleware(req: NextRequest) {
   const session = await auth();
   const url = new URL(req.url);
   const pathname = url.pathname;
 
-  const role = (session as any)?.role as 'admin' | 'mentor' | undefined;
+  const role = (session as ExtendedSession)?.role;
 
   if (pathname.startsWith('/admin')) {
     if (role !== 'admin') {

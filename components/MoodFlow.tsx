@@ -349,22 +349,22 @@ export default function MoodFlow({ value, onChange }: Props) {
           <label className="block text-sm font-medium text-gray-700">
             Elige la palabra que más se acerque a cómo te sientes:
           </label>
-          <div className="flex flex-wrap justify-center gap-2" role="group" aria-label="Emociones disponibles">
-            {availableEmotions.map((emotion) => (
-              <Chip
-                key={emotion}
-                selected={label === emotion}
-                onClick={() => handleLabelSelect(emotion)}
-                onKeyDown={(e) => handleChipKeyDown(e, emotion)}
-                className="py-1.5 text-sm transition-transform duration-150 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-400"
-                aria-pressed={label === emotion}
-                aria-label={`Emoción: ${emotion}`}
-                tabIndex={0}
-              >
-                {emotion}
-              </Chip>
-            ))}
-          </div>
+                  <div className="flex flex-wrap justify-center gap-2" role="group" aria-label="Emociones disponibles">
+                    {availableEmotions.map((emotion) => (
+                      <Chip
+                        key={emotion}
+                        selected={label === emotion}
+                        onClick={() => handleLabelSelect(emotion)}
+                        onKeyDown={(e) => handleChipKeyDown(e, emotion)}
+                        className="py-1.5 text-sm transition-all duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-400"
+                        aria-pressed={label === emotion}
+                        aria-label={`Emoción: ${emotion}`}
+                        tabIndex={0}
+                      >
+                        {emotion}
+                      </Chip>
+                    ))}
+                  </div>
         </>
       )}
 
@@ -398,9 +398,25 @@ export default function MoodFlow({ value, onChange }: Props) {
             <span id="mood-privacy-help" className="text-xs text-slate-400 italic">
               Tu respuesta se guarda de forma anónima y se utiliza para acompañarte mejor.
             </span>
-            <span id="mood-note-counter" className="text-xs text-slate-500 font-medium">
-              {note.length}/300 caracteres
-            </span>
+            <div className="flex items-center gap-2">
+              <span 
+                id="mood-note-counter" 
+                className={`text-xs font-semibold transition-colors ${
+                  note.length > 280 
+                    ? 'text-red-600' 
+                    : note.length > 200 
+                    ? 'text-amber-600' 
+                    : 'text-slate-600'
+                }`}
+              >
+                {note.length}/300
+              </span>
+              {note.length > 0 && (
+                <span className="text-xs text-slate-400">
+                  {300 - note.length} restantes
+                </span>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -409,6 +425,7 @@ export default function MoodFlow({ value, onChange }: Props) {
       {resumenText && (
         <div
           aria-live="polite"
+          aria-atomic="true"
           className="rounded-xl bg-emerald-50 text-emerald-800 text-sm p-4 border border-emerald-200"
         >
           <div className="flex items-start justify-between gap-4">
@@ -424,7 +441,8 @@ export default function MoodFlow({ value, onChange }: Props) {
                   textareaRef.current?.focus();
                   textareaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }}
-                className="text-xs font-medium text-emerald-700 hover:text-emerald-900 underline underline-offset-2 whitespace-nowrap"
+                className="text-xs font-medium text-emerald-700 hover:text-emerald-900 underline underline-offset-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-400 rounded"
+                aria-label="Agregar nota sobre tus emociones"
               >
                 Agregar nota
               </button>

@@ -104,7 +104,7 @@ export default function ReasonSelect({ reasons, value, onChange, otherText, onOt
           <div>
             <p className="font-medium mb-1">Redirección automática</p>
             <p className="text-xs">
-              "{legacyWarning.original.label}" ha sido redirigido a "{legacyWarning.effective?.label}".
+              &quot;{legacyWarning.original.label}&quot; ha sido redirigido a &quot;{legacyWarning.effective?.label}&quot;.
             </p>
             {legacyWarning.hint && (
               <p className="text-xs mt-1 italic">💡 {legacyWarning.hint}</p>

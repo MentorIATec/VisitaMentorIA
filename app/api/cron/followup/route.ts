@@ -4,6 +4,13 @@ import { sendFollowupEmail } from '@/lib/email';
 import { E2E_MOCKS, mocks } from '@/lib/test-mocks';
 import { auth } from '@/lib/auth';
 
+type ExtendedSession = {
+  role?: 'admin' | 'mentor' | 'anonymous';
+  mentorId?: string | null;
+  userId?: string | null;
+  needsLink?: boolean;
+};
+
 /**
  * Endpoint cron para enviar correos de follow-up
  * 
@@ -23,7 +30,7 @@ export async function GET(req: NextRequest) {
   if (!cronKey || cronKey !== expectedCronKey) {
     // Verificar sesión admin como fallback
     const session = await auth();
-    const role = (session as any)?.role;
+    const role = (session as ExtendedSession)?.role;
     if (role !== 'admin') {
       return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
     }
@@ -34,7 +41,6 @@ export async function GET(req: NextRequest) {
 
   if (E2E_MOCKS) {
     // Simular envío en modo mocks
-    const now = Date.now();
     const pendingSessions: Array<{ sessionId: string; email: string; token: string; variant: string; communityColor?: string }> = [];
     
     for (const [sessionId, session] of mocks.sessions.entries()) {

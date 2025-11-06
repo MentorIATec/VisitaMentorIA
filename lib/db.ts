@@ -11,7 +11,7 @@ export const pool = new Pool({ connectionString });
 export type UserRole = 'admin' | 'mentor' | 'anonymous';
 
 export async function withRlsContext<T>(
-  context: { email?: string | null; role?: UserRole; hashSalt?: string },
+  context: { email?: string | null; role?: UserRole; hashSalt?: string; user_id?: string | null },
   handler: (client: PoolClient) => Promise<T>
 ): Promise<T> {
   const client = await pool.connect();
@@ -22,6 +22,9 @@ export async function withRlsContext<T>(
     }
     if (context.email) {
       await client.query('SET app.user_email = $1', [context.email]);
+    }
+    if (context.user_id) {
+      await client.query('SET app.user_id = $1', [context.user_id]);
     }
     await client.query('SET app.user_role = $1', [context.role ?? 'anonymous']);
     const result = await handler(client);

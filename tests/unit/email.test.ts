@@ -51,7 +51,7 @@ describe('sendFollowupEmail', () => {
   });
 
   it('en modo dev sin SMTP configurado, solo loguea', async () => {
-    process.env.NODE_ENV = 'development';
+    Object.assign(process.env, { NODE_ENV: 'development' });
     delete process.env.SMTP_HOST;
     delete process.env.SENDGRID_API_KEY;
 
@@ -64,13 +64,15 @@ describe('sendFollowupEmail', () => {
   });
 
   it('con SMTP configurado, envía correo', async () => {
-    process.env.NODE_ENV = 'production';
-    process.env.SMTP_HOST = 'smtp.example.com';
-    process.env.SMTP_PORT = '587';
-    process.env.SMTP_USER = 'user@example.com';
-    process.env.SMTP_PASS = 'password';
-    process.env.MAIL_FROM = 'noreply@example.com';
-    process.env.NEXT_PUBLIC_BASE_URL = 'https://example.com';
+    Object.assign(process.env, { 
+      NODE_ENV: 'production',
+      SMTP_HOST: 'smtp.example.com',
+      SMTP_PORT: '587',
+      SMTP_USER: 'user@example.com',
+      SMTP_PASS: 'password',
+      MAIL_FROM: 'noreply@example.com',
+      NEXT_PUBLIC_BASE_URL: 'https://example.com'
+    });
 
     const mockSendMail = vi.fn().mockResolvedValue({ messageId: 'test-id' });
     (nodemailer.createTransport as ReturnType<typeof vi.fn>).mockReturnValue({
@@ -89,9 +91,11 @@ describe('sendFollowupEmail', () => {
   });
 
   it('con SendGrid API key, usa SendGrid', async () => {
-    process.env.NODE_ENV = 'production';
-    process.env.SENDGRID_API_KEY = 'SG.test-key';
-    process.env.MAIL_FROM = 'noreply@example.com';
+    Object.assign(process.env, {
+      NODE_ENV: 'production',
+      SENDGRID_API_KEY: 'SG.test-key',
+      MAIL_FROM: 'noreply@example.com'
+    });
 
     const mockSendMail = vi.fn().mockResolvedValue({ messageId: 'test-id' });
     (nodemailer.createTransport as ReturnType<typeof vi.fn>).mockReturnValue({
@@ -111,9 +115,11 @@ describe('sendFollowupEmail', () => {
   });
 
   it('reemplaza placeholders en plantilla', async () => {
-    process.env.NODE_ENV = 'production';
-    process.env.SMTP_HOST = 'smtp.test.com';
-    process.env.NEXT_PUBLIC_BASE_URL = 'https://test.com';
+    Object.assign(process.env, {
+      NODE_ENV: 'production',
+      SMTP_HOST: 'smtp.test.com',
+      NEXT_PUBLIC_BASE_URL: 'https://test.com'
+    });
 
     const mockSendMail = vi.fn().mockResolvedValue({ messageId: 'test-id' });
     (nodemailer.createTransport as ReturnType<typeof vi.fn>).mockReturnValue({
@@ -128,8 +134,10 @@ describe('sendFollowupEmail', () => {
   });
 
   it('usa subject diferente según variante', async () => {
-    process.env.NODE_ENV = 'production';
-    process.env.SMTP_HOST = 'smtp.test.com';
+    Object.assign(process.env, {
+      NODE_ENV: 'production',
+      SMTP_HOST: 'smtp.test.com'
+    });
 
     const mockSendMail = vi.fn().mockResolvedValue({ messageId: 'test-id' });
     (nodemailer.createTransport as ReturnType<typeof vi.fn>).mockReturnValue({

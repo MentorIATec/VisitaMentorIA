@@ -1,4 +1,5 @@
 export const E2E_MOCKS = process.env.E2E_MOCKS === '1';
+export const E2E_SSO_MOCK = process.env.E2E_SSO_MOCK === '1';
 
 export const mocks = {
   mentors: [
@@ -42,6 +43,9 @@ export const mocks = {
   ],
   sessions: new Map<string, Record<string, unknown> & { email?: string | null; followup_sent_at?: string | null }>(),
   followupTokens: new Map<string, { sessionId: string; usedAt: string | null; expiresAt: string | null }>(),
+  // Mocks SSO
+  ssoUsers: new Map<string, { sub: string; email: string; name: string; hasMatricula: boolean }>(),
+  usersMap: new Map<string, { user_id: string; matricula_hash: string }>(),
   emotions: {
     valence: ["dificil", "neutral", "agradable"],
     intensity: ["baja", "media", "alta"],

@@ -1,5 +1,6 @@
 import NextAuth, { NextAuthOptions, User } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import AzureADProvider from 'next-auth/providers/azure-ad';
 import { pool } from './db';
 
 function isAdminEmail(email: string | null | undefined): boolean {
@@ -19,6 +20,16 @@ export async function resolveRoleAndMentor(email: string | null | undefined) {
   return { role: 'anonymous' as const, mentorId: null };
 }
 
+async function checkUserHasMatricula(userId: string): Promise<boolean> {
+  const res = await pool.query<{ matricula_hash: string }>(
+    'SELECT matricula_hash FROM public.users_map WHERE user_id = $1',
+    [userId]
+  );
+  return res.rowCount !== null && res.rowCount > 0 && res.rows[0]?.matricula_hash !== null;
+}
+
+const isSSOEnabled = process.env.SSO_ENABLED === 'true';
+
 export const authOptions: NextAuthOptions = {
   session: { strategy: 'jwt' },
   providers: [
@@ -34,20 +45,56 @@ export const authOptions: NextAuthOptions = {
         const user: User = { id: email, name: email, email };
         return user;
       }
-    })
+    }),
+    ...(isSSOEnabled ? [
+      AzureADProvider({
+        clientId: process.env.AZURE_AD_CLIENT_ID || '',
+        clientSecret: process.env.AZURE_AD_CLIENT_SECRET || '',
+        tenantId: process.env.AZURE_AD_TENANT_ID,
+        authorization: {
+          params: {
+            scope: 'openid profile email',
+          },
+        },
+      })
+    ] : [])
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      const email = user?.email || token.email || null;
+    async jwt({ token, user, account }) {
+      // Si es login de Azure AD, usar el sub como user_id
+      if (account?.provider === 'azure-ad' && user?.id) {
+        token.userId = user.id; // sub de Azure AD
+        token.email = user.email || null;
+        token.name = user.name || null;
+        
+        // Verificar si tiene matrícula vinculada
+        const hasMatricula = await checkUserHasMatricula(user.id);
+        token.needsLink = !hasMatricula;
+      } else {
+        // Flujo de credenciales (email)
+        const email = user?.email || token.email || null;
+        token.userId = null;
+        token.needsLink = false;
+      }
+      
+      const email = token.email || null;
       const { role, mentorId } = await resolveRoleAndMentor(email);
       token.role = role;
       token.mentorId = mentorId;
+      
       return token;
     },
     async session({ session, token }) {
-      const extended = session as unknown as Record<string, unknown> & { role?: 'admin'|'mentor'|'anonymous'; mentorId?: string | null };
+      const extended = session as unknown as Record<string, unknown> & { 
+        role?: 'admin'|'mentor'|'anonymous'; 
+        mentorId?: string | null;
+        userId?: string | null;
+        needsLink?: boolean;
+      };
       extended.role = token.role as 'admin'|'mentor'|'anonymous';
       extended.mentorId = (token as Record<string, unknown>).mentorId as string | null;
+      extended.userId = (token as Record<string, unknown>).userId as string | null | undefined;
+      extended.needsLink = (token as Record<string, unknown>).needsLink as boolean | undefined;
       return extended as unknown as typeof session;
     }
   }

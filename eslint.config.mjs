@@ -18,6 +18,7 @@ const eslintConfig = defineConfig([
     "public/**",
     "db/migrations/**",
     "db/seeds/**",
+    "scripts/**", // Scripts JS con require()
   ]),
 ]);
 
